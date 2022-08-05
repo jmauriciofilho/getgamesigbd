@@ -1,0 +1,15 @@
+{
+  "name": "getgamesigbd",
+  "version": "1.0.0",
+  "description": "script para buscar e tratar dados do IGBD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"bem-vindo\"",
+    "getGames": "node index.js"
+  },
+  "author": "mauricio pereira",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
