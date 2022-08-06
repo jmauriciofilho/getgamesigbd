@@ -45,6 +45,8 @@ axios({
             game.cover = `https://images.igdb.com/igdb/image/upload/t_original/${image_id}.jpg`
 
             console.log(game)
+            // TODO: integrar com api notion e salvar na data base notion 
+
         }).catch(err => {
             console.error(err);
         });
