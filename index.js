@@ -17,6 +17,7 @@ const notion = new Client({
 })
 // ----------------------------------------
 
+// TODO: aceitar um array de slugs de um arquivo json
 const slug = "teenage-mutant-ninja-turtles-shredders-revenge"
 let cover = ""
 let game = {}
@@ -54,9 +55,6 @@ axios({
             const image_id = response.data[0]['image_id']
             game.cover = `https://images.igdb.com/igdb/image/upload/t_original/${image_id}.jpg`
 
-            console.log(game)
-            // TODO: integrar com api notion e salvar na data base notion
-
             notion.pages.create({
                 "parent": {
                     "database_id": notion_data_base_id
@@ -87,6 +85,9 @@ axios({
                         }
                     }
                 }
+            }).then(() => {
+                console.log('Game salvo com sucesso!')
+                console.log(`Nome: ${game.name}`)
             })
 
         }).catch(err => {
