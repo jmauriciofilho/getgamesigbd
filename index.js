@@ -1,13 +1,23 @@
 const axios = require('axios')
+const {Client} = require('@notionhq/client')
 
+// ----- credenciais API IGBD -------------
 const client_id = "t2ia0m1vobq1z03mj5fi15xo4kkqgl"
 const client_secret = "ubjqijinyyxf279hrukk14rtliyzjd"
 const grant_type = "client_credentials"
-
 let access_token = ""
 let token_type = ""
+// ----------------------------------------
 
-const slug = "final-fantasy-vii-remake"
+// ----- credenciais API notion -----------
+const notion_key = "secret_8Pkgoyeu2NKu19ozxkS4NiCkRFlUSVXHDxtlbx0fUqb"
+const notion_data_base_id = "87d35877b1e448d7827d903de1c19413"
+const notion = new Client({
+    auth: notion_key
+})
+// ----------------------------------------
+
+const slug = "teenage-mutant-ninja-turtles-shredders-revenge"
 let cover = ""
 let game = {}
 
@@ -45,7 +55,39 @@ axios({
             game.cover = `https://images.igdb.com/igdb/image/upload/t_original/${image_id}.jpg`
 
             console.log(game)
-            // TODO: integrar com api notion e salvar na data base notion 
+            // TODO: integrar com api notion e salvar na data base notion
+
+            notion.pages.create({
+                "parent": {
+                    "database_id": notion_data_base_id
+                },
+                "cover": {
+                    "type": "external",
+                    "external": {
+                        "url": game.cover
+                    }
+                },
+                "icon": {
+                    "type": "emoji",
+                    "emoji": "🎮"
+                },
+                "properties": {
+                    "Nome": { 
+                      "title":[
+                        {
+                          "text": {
+                            "content": game.name
+                          }
+                        }
+                      ]
+                    },
+                    "Status": {
+                        "select": {
+                            "name": "Vazio"
+                        }
+                    }
+                }
+            })
 
         }).catch(err => {
             console.error(err);
